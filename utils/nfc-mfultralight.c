@@ -381,9 +381,9 @@ write_card(bool write_otp, bool write_lock, bool write_dyn_lock, bool write_uid)
     write_uid = ((buffer[0] == 'y') || (buffer[0] == 'Y'));
   }
 
-  printf("Writing %d pages |", uiBlocks);
   /* We may need to skip 2 first pages. */
   if (!write_uid) {
+    printf("Writing %d pages |", uiBlocks);
     printf("ss");
     uiSkippedPages = 2;
   } else {
@@ -391,6 +391,7 @@ write_card(bool write_otp, bool write_lock, bool write_dyn_lock, bool write_uid)
       printf("\nUnable to unlock card - are you sure the card is magic?\n");
       return false;
     }
+    printf("Writing %d pages |", uiBlocks);
   }
 
   for (uint32_t page = uiSkippedPages; page < uiBlocks; page++) {
@@ -525,7 +526,7 @@ main(int argc, const char *argv[])
   bool    bFilename = false;
   FILE   *pfDump;
 
-  if (argc < 3) {
+  if (argc == 0) {
     print_usage(argv);
     exit(EXIT_FAILURE);
   }
@@ -578,7 +579,7 @@ main(int argc, const char *argv[])
       }
     }
   }
-  if (! bFilename) {
+  if (iAction != 3 && !bFilename) {
     ERR("Please supply a Mifare Dump filename");
     exit(EXIT_FAILURE);
   }
@@ -648,7 +649,7 @@ main(int argc, const char *argv[])
   if (get_ev1_version()) {
     if (!bPWD)
       printf("WARNING: Tag is EV1 or NTAG - PASSWORD may be required\n");
-    if (abtRx[6] == 0x0b) {
+    if (abtRx[6] == 0x0b || abtRx[6] == 0x00) {
       printf("EV1 type: MF0UL11 (48 bytes)\n");
       uiBlocks = 20; // total number of 4 byte 'pages'
       iDumpSize = uiBlocks * 4;
