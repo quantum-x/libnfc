@@ -10,6 +10,7 @@
  * See AUTHORS file for a more comprehensive list of contributors.
  * Additional contributors of this file:
  * Copyright (C) 2013-2018 Adam Laurie
+ * Copyright (C) 2018-2019 Daniele Bruneo
  *
  * Redistribution and use in source and binary forms, with or without
  * modification, are permitted provided that the following conditions are met:
