@@ -10,6 +10,7 @@
  * See AUTHORS file for a more comprehensive list of contributors.
  * Additional contributors of this file:
  * Copyright (C) 2011-2013 Adam Laurie
+ * Copyright (C) 2018-2019 Danielle Bruneo 
  *
  * Redistribution and use in source and binary forms, with or without
  * modification, are permitted provided that the following conditions are met:
@@ -362,7 +363,7 @@ read_card(int read_unlocked)
         if (read_unlocked) {
           memcpy(mtDump.amb[iBlock].mbd.abtData, mp.mpd.abtData, sizeof(mtDump.amb[iBlock].mbd.abtData));
         } else {
-          //If we're using a Rebadge 2.0 Card ('magic3') - we'll use default keys + ACL
+          //If we're using a One Time Write ('Magic 3') Badge - we'll use default keys + ACL
           if (magic3) {
             memcpy(mtDump.amb[iBlock].mbt.abtKeyA, default_key, sizeof(default_key));
             memcpy(mtDump.amb[iBlock].mbt.abtAccessBits, mp.mpt.abtAccessBits, sizeof(mtDump.amb[iBlock].mbt.abtAccessBits));
@@ -856,7 +857,7 @@ main(int argc, const char *argv[])
       }
   }
 
-  //Check to see if we have a rebadge card (magic3)
+  //Check to see if we have a One Time Write badge (magic3)
   if (pbtUID[0] == 0xaa && pbtUID[1] == 0x55 &&
     pbtUID[2] == 0xc3 && pbtUID[3] == 0x96) {
     printf("Card appears to be a One Time Write Card..\n");
